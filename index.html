@@ -16,7 +16,7 @@
             justify-content: flex-start; /* Align to top for multi-page layout */
             align-items: center;
             min-height: 100vh;
-            padding: 1.5rem; /* Slightly reduced overall padding */
+            padding: 2rem; /* Increased overall padding for two pages */
         }
         .resume-container {
             background-color: #ffffff;
@@ -25,41 +25,41 @@
             max-width: 210mm; /* A4 width */
             width: 100%;
             overflow: hidden; /* Ensures border-radius applies correctly */
-            margin-bottom: 1rem; /* Further reduced space between pages */
+            margin-bottom: 2rem; /* Increased space between pages */
             box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
 
         .header-section {
             background-color: #212529; /* Dark charcoal/black from template */
             color: #ffffff;
-            padding: 2rem 2.2rem; /* Further reduced padding */
+            padding: 2.5rem 3rem; /* Increased padding */
             text-align: center;
         }
         .header-section h1 {
-            font-size: 2.7rem; /* Further adjusted for A4 */
+            font-size: 3.2rem; /* Increased font size */
             font-weight: 800; /* Extra bold for impact */
             color: #ffffff;
-            margin-bottom: 0.3rem; /* Further reduced margin */
+            margin-bottom: 0.5rem; /* Increased margin */
             letter-spacing: 0.05em; /* Slightly wider letter spacing for the name */
         }
         .header-section .title {
-            font-size: 1.25rem; /* Further adjusted for A4 */
+            font-size: 1.5rem; /* Increased font size */
             font-weight: 500;
             color: #e0e0e0;
-            margin-bottom: 1rem; /* Further reduced margin */
+            margin-bottom: 1.5rem; /* Increased margin */
         }
         .contact-info {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1rem; /* Further reduced gap */
-            font-size: 0.8rem; /* Further adjusted for A4 */
+            gap: 1.5rem; /* Increased gap */
+            font-size: 0.95rem; /* Increased font size */
             color: #cccccc;
         }
         .contact-info div {
             display: flex;
             align-items: center;
-            gap: 0.3rem; /* Further reduced gap */
+            gap: 0.5rem; /* Increased gap */
         }
         .contact-info a {
             color: #cccccc;
@@ -70,33 +70,33 @@
             color: #ffffff;
         }
         .contact-info svg {
-            width: 15px; /* Further adjusted for A4 */
-            height: 15px; /* Further adjusted for A4 */
+            width: 18px; /* Increased icon size */
+            height: 18px; /* Increased icon size */
             fill: currentColor; /* Use text color for SVG */
         }
 
         .main-content-area {
-            padding: 2.2rem 2.2rem; /* Further adjusted padding for A4 */
+            padding: 3.5rem 3rem; /* Increased padding */
             color: #343a40; /* Dark charcoal text for high contrast */
-            line-height: 1.5; /* Further reduced line height */
+            line-height: 1.7; /* Increased line height */
         }
 
         h2 {
-            font-size: 1.6rem; /* Further adjusted for A4 */
+            font-size: 1.95rem; /* Increased font size */
             font-weight: 800; /* Made bolder for emphasis */
             color: #1a202c; /* Darker for section titles */
             border-bottom: 2px solid #e9ecef; /* Lighter, subtle border */
-            padding-bottom: 0.5rem; /* Further reduced padding */
-            margin-top: 1.8rem; /* Further reduced vertical spacing */
-            margin-bottom: 0.8rem; /* Further reduced vertical spacing */
+            padding-bottom: 0.8rem; /* Increased padding */
+            margin-top: 3rem; /* Increased vertical spacing */
+            margin-bottom: 1.5rem; /* Increased vertical spacing */
             text-transform: uppercase; /* Uppercase as in the template */
             letter-spacing: 0.05em; /* Slight letter spacing for headings */
         }
         h3 {
-            font-size: 1.2rem; /* Further adjusted for A4 */
+            font-size: 1.45rem; /* Increased font size */
             font-weight: 700; /* Made bolder for emphasis */
             color: #2d3748; /* Darker for subheadings */
-            margin-bottom: 0.3rem; /* Further reduced margin */
+            margin-bottom: 0.6rem; /* Increased margin */
         }
         /* Style for highlighted project titles */
         h3.highlighted-project-title {
@@ -104,7 +104,7 @@
             font-weight: 800; /* Extra bold */
         }
         p, li {
-            font-size: 0.9rem; /* Further adjusted for A4 */
+            font-size: 1.1rem; /* Increased font size */
             color: #495057; /* Medium dark gray for content */
         }
         ul {
@@ -120,16 +120,54 @@
             margin-left: -1em;
         }
         .section-content {
-            margin-bottom: 1.5rem; /* Further reduced spacing between content blocks */
+            margin-bottom: 2.5rem; /* Increased spacing between content blocks */
         }
         .job-title {
             font-weight: 600; /* Stronger weight for job titles */
             color: #2f3640; /* Darker for job titles */
         }
         .date-range {
-            font-size: 0.8rem; /* Further adjusted for A4 */
+            font-size: 1rem; /* Increased font size */
             color: #718096; /* Consistent subtle blue-gray for dates */
-            margin-bottom: 0.5rem; /* Further reduced margin */
+            margin-bottom: 0.8rem; /* Increased margin */
+        }
+
+        /* Page break for printing */
+        .page-break {
+            page-break-before: always;
+            height: 297mm; /* A4 height */
+        }
+
+        /* Responsive adjustments for header contact info */
+        @media (max-width: 640px) {
+            .contact-info {
+                flex-direction: column;
+                align-items: flex-start; /* Align items to the left */
+                gap: 0.8rem;
+                padding-left: 1rem; /* Indent slightly */
+                padding-right: 1rem;
+            }
+            .header-section {
+                padding: 2rem 1.5rem;
+            }
+            .header-section h1 {
+                font-size: 2.5rem;
+            }
+            .header-section .title {
+                font-size: 1.2rem;
+            }
+            .main-content-area {
+                padding: 2rem 1.5rem;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            h3 {
+                font-size: 1.2rem;
+            }
+            p, li {
+                font-size: 1rem;
+            }
         }
 
         /* Print styles for page breaks and button hiding */
@@ -163,7 +201,7 @@
         </button>
     </div>
 
-    <!-- Main Resume Container (Single Page) -->
+    <!-- Page 1 -->
     <div class="resume-container">
         <!-- Header Section -->
         <header class="header-section">
@@ -227,7 +265,12 @@
                     </ul>
                 </div>
             </section>
+        </div>
+    </div>
 
+    <!-- Page 2 -->
+    <div class="resume-container page-break">
+        <div class="main-content-area pt-10"> <!-- Reduced top padding for continuation -->
             <!-- Skills & Tools -->
             <section class="section-content">
                 <h2>SKILLS & TOOLS</h2>
