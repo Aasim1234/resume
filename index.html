@@ -22,10 +22,11 @@
             background-color: #ffffff;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Slightly more pronounced shadow */
             border-radius: 0.75rem;
-            max-width: 8.5in; /* Standard letter size width */
+            max-width: 210mm; /* A4 width */
             width: 100%;
             overflow: hidden; /* Ensures border-radius applies correctly */
             margin-bottom: 1.5rem; /* Reduced space between pages */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
 
         .header-section {
@@ -35,14 +36,14 @@
             text-align: center;
         }
         .header-section h1 {
-            font-size: 3rem; /* Slightly smaller name */
+            font-size: 2.8rem; /* Adjusted for A4 */
             font-weight: 800; /* Extra bold for impact */
             color: #ffffff;
             margin-bottom: 0.4rem; /* Slightly reduced margin */
             letter-spacing: 0.05em; /* Slightly wider letter spacing for the name */
         }
         .header-section .title {
-            font-size: 1.4rem; /* Slightly smaller title */
+            font-size: 1.3rem; /* Adjusted for A4 */
             font-weight: 500;
             color: #e0e0e0;
             margin-bottom: 1.2rem; /* Slightly reduced margin */
@@ -52,7 +53,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 1.2rem; /* Slightly reduced gap */
-            font-size: 0.9rem; /* Slightly smaller font size */
+            font-size: 0.85rem; /* Adjusted for A4 */
             color: #cccccc;
         }
         .contact-info div {
@@ -69,33 +70,33 @@
             color: #ffffff;
         }
         .contact-info svg {
-            width: 17px; /* Slightly smaller icon */
-            height: 17px; /* Slightly smaller icon */
+            width: 16px; /* Adjusted for A4 */
+            height: 16px; /* Adjusted for A4 */
             fill: currentColor; /* Use text color for SVG */
         }
 
         .main-content-area {
-            padding: 3rem 2.5rem; /* Slightly reduced padding */
+            padding: 2.5rem 2.5rem; /* Adjusted padding for A4 */
             color: #343a40; /* Dark charcoal text for high contrast */
-            line-height: 1.6; /* Slightly reduced line height */
+            line-height: 1.55; /* Slightly reduced line height */
         }
 
         h2 {
-            font-size: 1.8rem; /* Slightly smaller section titles */
+            font-size: 1.7rem; /* Adjusted for A4 */
             font-weight: 800; /* Made bolder for emphasis */
             color: #1a202c; /* Darker for section titles */
             border-bottom: 2px solid #e9ecef; /* Lighter, subtle border */
-            padding-bottom: 0.7rem; /* Slightly reduced padding */
-            margin-top: 2.5rem; /* Reduced vertical spacing */
-            margin-bottom: 1.2rem; /* Reduced vertical spacing */
+            padding-bottom: 0.6rem; /* Adjusted padding */
+            margin-top: 2.2rem; /* Adjusted vertical spacing */
+            margin-bottom: 1rem; /* Adjusted vertical spacing */
             text-transform: uppercase; /* Uppercase as in the template */
             letter-spacing: 0.05em; /* Slight letter spacing for headings */
         }
         h3 {
-            font-size: 1.35rem; /* Slightly smaller subheadings */
+            font-size: 1.25rem; /* Adjusted for A4 */
             font-weight: 700; /* Made bolder for emphasis */
             color: #2d3748; /* Darker for subheadings */
-            margin-bottom: 0.5rem; /* Slightly reduced margin */
+            margin-bottom: 0.4rem; /* Adjusted margin */
         }
         /* Style for highlighted project titles */
         h3.highlighted-project-title {
@@ -103,7 +104,7 @@
             font-weight: 800; /* Extra bold */
         }
         p, li {
-            font-size: 1rem; /* Slightly smaller base font size */
+            font-size: 0.95rem; /* Adjusted for A4 */
             color: #495057; /* Medium dark gray for content */
         }
         ul {
@@ -119,21 +120,22 @@
             margin-left: -1em;
         }
         .section-content {
-            margin-bottom: 2rem; /* Slightly reduced spacing between content blocks */
+            margin-bottom: 1.8rem; /* Adjusted spacing between content blocks */
         }
         .job-title {
             font-weight: 600; /* Stronger weight for job titles */
             color: #2f3640; /* Darker for job titles */
         }
         .date-range {
-            font-size: 0.9rem; /* Slightly smaller date font */
+            font-size: 0.85rem; /* Adjusted for A4 */
             color: #718096; /* Consistent subtle blue-gray for dates */
-            margin-bottom: 0.7rem; /* Slightly reduced margin */
+            margin-bottom: 0.6rem; /* Adjusted margin */
         }
 
         /* Page break for printing */
         .page-break {
             page-break-before: always;
+            height: 297mm; /* A4 height */
         }
 
         /* Responsive adjustments for header contact info */
@@ -141,30 +143,30 @@
             .contact-info {
                 flex-direction: column;
                 align-items: flex-start; /* Align items to the left */
-                gap: 0.8rem;
-                padding-left: 1rem; /* Indent slightly */
-                padding-right: 1rem;
+                gap: 0.6rem; /* Further reduced gap */
+                padding-left: 0.8rem; /* Further reduced indent */
+                padding-right: 0.8rem;
             }
             .header-section {
-                padding: 1.8rem 1.2rem; /* Further reduced padding */
+                padding: 1.5rem 1rem; /* Further reduced padding */
             }
             .header-section h1 {
-                font-size: 2.2rem; /* Further reduced font size */
+                font-size: 2rem; /* Further reduced font size */
             }
             .header-section .title {
-                font-size: 1.1rem; /* Further reduced font size */
+                font-size: 1rem; /* Further reduced font size */
             }
             .main-content-area {
-                padding: 1.8rem 1.2rem; /* Further reduced padding */
+                padding: 1.5rem 1rem; /* Further reduced padding */
             }
             h2 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
             h3 {
                 font-size: 1.1rem;
             }
             p, li {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
         }
 
@@ -179,6 +181,8 @@
                 box-shadow: none;
                 border-radius: 0;
                 margin-bottom: 0;
+                width: 210mm; /* Ensure A4 width for print */
+                height: 297mm; /* Ensure A4 height for print */
                 page-break-after: always; /* Ensure each resume-container is a new page */
             }
             .resume-container:last-of-type {
