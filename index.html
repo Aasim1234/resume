@@ -168,7 +168,7 @@
             }
         }
 
-        /* Print styles for page breaks */
+        /* Print styles for page breaks and button hiding */
         @media print {
             body {
                 padding: 0;
@@ -184,10 +184,19 @@
             .resume-container:last-of-type {
                 page-break-after: avoid; /* No page break after the last container */
             }
+            .print-button-container {
+                display: none; /* Hide the print button when printing */
+            }
         }
     </style>
 </head>
 <body>
+    <div class="print-button-container text-center mb-8">
+        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            Download/Print Resume
+        </button>
+    </div>
+
     <!-- Page 1 -->
     <div class="resume-container">
         <!-- Header Section -->
