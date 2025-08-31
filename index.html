@@ -26,7 +26,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 p-8">
 
-    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8" id="resume-content">
 
         <!-- Download Button -->
         <div class="flex justify-end mb-4">
@@ -190,21 +190,21 @@
                 <li>English: Professional Working</li>
             </ul>
         </section>
-
     </div>
 
+    <!-- Include the html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.getElementById('download-button').addEventListener('click', () => {
-            const content = document.documentElement.outerHTML;
-            const blob = new Blob([content], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Aasim_Raza_Resume.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            const element = document.getElementById('resume-content');
+            const opt = {
+                margin: 0.5,
+                filename: 'Aasim_Raza_Resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().from(element).set(opt).save();
         });
     </script>
 
