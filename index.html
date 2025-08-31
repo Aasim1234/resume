@@ -28,6 +28,13 @@
 
     <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
 
+        <!-- Download Button -->
+        <div class="flex justify-end mb-4">
+            <button id="download-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">
+                Download Resume
+            </button>
+        </div>
+
         <!-- Header Section -->
         <header class="text-center pb-6 border-b-2 border-gray-200">
             <h1 class="text-4xl text-gray-900 font-bold mb-1">Aasim Raza</h1>
@@ -185,6 +192,21 @@
         </section>
 
     </div>
+
+    <script>
+        document.getElementById('download-button').addEventListener('click', () => {
+            const content = document.documentElement.outerHTML;
+            const blob = new Blob([content], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Aasim_Raza_Resume.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
 
 </body>
 </html>
