@@ -3,308 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aasim Raza - QA Engineer</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Aasim Raza - Resume</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa; /* Very light gray background */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Align to top for multi-page layout */
-            align-items: center;
-            min-height: 100vh;
-            padding: 2rem; /* Increased overall padding for two pages */
+            line-height: 1.6;
         }
-        .resume-container {
-            background-color: #ffffff;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Slightly more pronounced shadow */
-            border-radius: 0.75rem;
-            max-width: 210mm; /* A4 width */
-            width: 100%;
-            overflow: hidden; /* Ensures border-radius applies correctly */
-            margin-bottom: 2rem; /* Increased space between pages */
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        /* Keep all styling as simple and class-based as ATS readability */
+        .resume-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
         }
-
-        .header-section {
-            background-color: #212529; /* Dark charcoal/black from template */
-            color: #ffffff;
-            padding: 2.5rem 3rem; /* Increased padding */
-            text-align: center;
+        .resume-section:last-child {
+            border-bottom: none;
         }
-        .header-section h1 {
-            font-size: 3.2rem; /* Increased font size */
-            font-weight: 800; /* Extra bold for impact */
-            color: #ffffff;
-            margin-bottom: 0.5rem; /* Increased margin */
-            letter-spacing: 0.05em; /* Slightly wider letter spacing for the name */
-        }
-        .header-section .title {
-            font-size: 1.5rem; /* Increased font size */
-            font-weight: 500;
-            color: #e0e0e0;
-            margin-bottom: 1.5rem; /* Increased margin */
-        }
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem; /* Increased gap */
-            font-size: 0.95rem; /* Increased font size */
-            color: #cccccc;
-        }
-        .contact-info div {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem; /* Increased gap */
-        }
-        .contact-info a {
-            color: #cccccc;
-            text-decoration: none;
-            transition: color 0.2s ease-in-out;
-        }
-        .contact-info a:hover {
-            color: #ffffff;
-        }
-        .contact-info svg {
-            width: 18px; /* Increased icon size */
-            height: 18px; /* Increased icon size */
-            fill: currentColor; /* Use text color for SVG */
-        }
-
-        .main-content-area {
-            padding: 3.5rem 3rem; /* Increased padding */
-            color: #343a40; /* Dark charcoal text for high contrast */
-            line-height: 1.7; /* Increased line height */
-        }
-
-        h2 {
-            font-size: 1.95rem; /* Increased font size */
-            font-weight: 800; /* Made bolder for emphasis */
-            color: #1a202c; /* Darker for section titles */
-            border-bottom: 2px solid #e9ecef; /* Lighter, subtle border */
-            padding-bottom: 0.8rem; /* Increased padding */
-            margin-top: 3rem; /* Increased vertical spacing */
-            margin-bottom: 1.5rem; /* Increased vertical spacing */
-            text-transform: uppercase; /* Uppercase as in the template */
-            letter-spacing: 0.05em; /* Slight letter spacing for headings */
-        }
-        h3 {
-            font-size: 1.45rem; /* Increased font size */
-            font-weight: 700; /* Made bolder for emphasis */
-            color: #2d3748; /* Darker for subheadings */
-            margin-bottom: 0.6rem; /* Increased margin */
-        }
-        /* Style for highlighted project titles */
-        h3.highlighted-project-title {
-            color: #1a202c; /* Even darker color for strong highlight */
-            font-weight: 800; /* Extra bold */
-        }
-        p, li {
-            font-size: 1.1rem; /* Increased font size */
-            color: #495057; /* Medium dark gray for content */
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        ul.bullet-list li:before {
-            content: "\2022"; /* Unicode bullet point */
-            color: #6c757d; /* A slightly darker subtle gray for bullets */
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
-        .section-content {
-            margin-bottom: 2.5rem; /* Increased spacing between content blocks */
-        }
-        .job-title {
-            font-weight: 600; /* Stronger weight for job titles */
-            color: #2f3640; /* Darker for job titles */
-        }
-        .date-range {
-            font-size: 1rem; /* Increased font size */
-            color: #718096; /* Consistent subtle blue-gray for dates */
-            margin-bottom: 0.8rem; /* Increased margin */
-        }
-
-        /* Page break for printing */
-        .page-break {
-            page-break-before: always;
-            height: 297mm; /* A4 height */
-        }
-
-        /* Responsive adjustments for header contact info */
-        @media (max-width: 640px) {
-            .contact-info {
-                flex-direction: column;
-                align-items: flex-start; /* Align items to the left */
-                gap: 0.8rem;
-                padding-left: 1rem; /* Indent slightly */
-                padding-right: 1rem;
-            }
-            .header-section {
-                padding: 2rem 1.5rem;
-            }
-            .header-section h1 {
-                font-size: 2.5rem;
-            }
-            .header-section .title {
-                font-size: 1.2rem;
-            }
-            .main-content-area {
-                padding: 2rem 1.5rem;
-            }
-            h2 {
-                font-size: 1.6rem;
-            }
-            h3 {
-                font-size: 1.2rem;
-            }
-            p, li {
-                font-size: 1rem;
-            }
-        }
-
-        /* Print styles for page breaks and button hiding */
-        @media print {
-            body {
-                padding: 0;
-                margin: 0;
-                display: block;
-            }
-            .resume-container {
-                box-shadow: none;
-                border-radius: 0;
-                margin-bottom: 0;
-                width: 210mm; /* Ensure A4 width for print */
-                height: 297mm; /* Ensure A4 height for print */
-                page-break-after: always; /* Ensure each resume-container is a new page */
-            }
-            .resume-container:last-of-type {
-                page-break-after: avoid; /* No page break after the last container */
-            }
-            .print-button-container {
-                display: none; /* Hide the print button when printing */
-            }
+        h1, h2, h3 {
+            font-weight: 600;
         }
     </style>
 </head>
-<body>
-    <div class="print-button-container text-center mb-8">
-        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            Download/Print Resume
-        </button>
-    </div>
+<body class="bg-gray-50 text-gray-800 p-8">
 
-    <!-- Page 1 -->
-    <div class="resume-container">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+
         <!-- Header Section -->
-        <header class="header-section">
-            <h1>AASIM RAZA</h1>
-            <p class="title">QA Engineer</p>
-            <div class="contact-info">
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-1.11 2.4l-.47.28a2 2 0 0 0-.75 2.05c.42 1.17 1.24 2.1 2.41 2.92a2 2 0 0 0 2.12.07l.43-.25a2 2 0 0 1 2.4-1.1l2.81.7c.5.13 1.02.16 1.5.08a2 2 0 0 1 1.72 2v3Z"/></svg>
-                    <span>+91 9766613006</span>
-                </div>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    <a href="mailto:aasimdevops@gmail.com">aasimdevops@gmail.com</a>
-                </div>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M12 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 22.5c-1.5 0-4-2-6-5.5a7.5 7.5 0 0 1 12 0c-2 3.5-4.5 5.5-6 5.5Z"/></svg>
-                    <span>Pune, India</span>
-                </div>
+        <header class="text-center pb-6 border-b-2 border-gray-200">
+            <h1 class="text-4xl text-gray-900 font-bold mb-1">Aasim Raza</h1>
+            <p class="text-lg text-gray-600">DevOps Engineer</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center mt-4 text-sm text-gray-500">
+                <span class="mb-2 sm:mb-0 sm:mr-4">
+                    <span class="mr-1">&#9990;</span> 09766613006
+                </span>
+                <span class="mb-2 sm:mb-0 sm:mr-4">
+                    <span class="mr-1">&#9993;</span> aasimrazamorshi@gmail.com
+                </span>
+                <span>
+                    <span class="mr-1">&#128279;</span> linkedin.com/in/aasim-raza-9a788a215
+                </span>
             </div>
         </header>
 
-        <!-- Main Content Area -->
-        <div class="main-content-area">
-            <!-- Summary -->
-            <section class="section-content">
-                <h2>SUMMARY</h2>
-                <p>
-                    Highly driven QA Engineer with hands-on experience in Quality Assurance methodologies, test automation, and continuous quality improvement. Leveraging a background in DevOps and cloud infrastructure, I am adept at integrating testing into CI/CD pipelines to ensure robust software delivery, system reliability, and high-quality product releases. Eager to contribute to complex platform engineering challenges with a primary focus on ensuring product excellence.
-                </p>
-            </section>
+        <!-- Professional Summary Section -->
+        <section class="resume-section">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-2">Professional Summary</h2>
+            <p class="text-gray-700 text-sm">
+                DevOps Engineer with hands-on experience in automating infrastructure, managing cloud deployments, and building CI/CD pipelines. Skilled in AWS, Terraform, Docker, Kubernetes, and Jenkins with strong expertise in monitoring and automation. Proven track record of delivering scalable, secure, and reliable systems while streamlining development workflows. Adept at integrating DevOps tools to ensure smooth deployments, proactive monitoring, and optimized system performance.
+            </p>
+        </section>
 
-            <!-- Professional Experience (Now QA Tester Focused) -->
-            <section class="section-content">
-                <h2>RELEVANT EXPERIENCE</h2>
-                <div class="mb-6">
-                    <h3>QA Tester</h3>
-                    <p class="text-gray-800 job-title"></p>
-                    <p class="date-range"></p>
-                    <ul class="bullet-list text-gray-700 mt-2">
-                        <li>Performed detailed testing of applications to ensure they work as expected and meet user requirements.</li>
-                        <li>Created and followed clear test plans and test cases to check different parts of the system.</li>
-                        <li>Reported issues clearly and worked closely with developers to get them fixed.</li>
-                        <li>Tested new features as well as older ones to make sure nothing was broken during updates.</li>
-                        <li>Helped improve the quality of applications by identifying problems early and suggesting improvements.</li>
-                        <li>Worked in a team environment, attending regular meetings to discuss progress and testing needs.</li>
-                        <li>Carefully checked applications on different devices and systems to ensure they worked smoothly for all users.</li>
-                        <li>Maintained records of testing activities and results for future reference and analysis.</li>
+        <!-- Core Skills Section -->
+        <section class="resume-section">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Core Skills</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <h3 class="font-semibold text-gray-900">DevOps Tools & CI/CD</h3>
+                    <ul class="list-disc list-inside text-gray-700 pl-4 mt-1">
+                        <li>Jenkins, Maven, Nexus, Git, Slack</li>
                     </ul>
                 </div>
-            </section>
-        </div>
-    </div>
-
-    <!-- Page 2 -->
-    <div class="resume-container page-break">
-        <div class="main-content-area pt-10"> <!-- Reduced top padding for continuation -->
-            <!-- Skills & Tools -->
-            <section class="section-content">
-                <h2>SKILLS & TOOLS</h2>
-                <ul class="bullet-list text-gray-700 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2">
-                    <li>Manual Testing</li>
-                    <li>Functional & Regression Testing</li>
-                    <li>Test Case Writing & Execution</li>
-                    <li>Basic Automation Testing Concepts</li>
-                    <li>Defect Identification & Reporting</li>
-                    <li>Basic Knowledge of CI/CD Testing Processes</li>
-                    <li>Docker</li>
-                    <li>Kubernetes</li>
-                    <li>Understanding of Software Development Life Cycle (SDLC)</li>
-                </ul>
-            </section>
-
-            <!-- Education -->
-            <section class="section-content">
-                <h2>EDUCATION</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
-                    <div class="mb-4">
-                        <h3>Bachelor of Engineering</h3>
-                        <p class="text-gray-800">Government College of Engineering, Jalgaon</p>
-                        <p class="date-range">2022 | CGPA: 8/10</p>
-                    </div>
-                    <div class="mb-4">
-                        <h3>12th, Maharashtra, English</h3>
-                        <p class="text-gray-800">Maharashtra Board</p>
-                        <p class="date-range">2018 | 75-79.9%</p>
-                    </div>
-                    <div class="mb-4">
-                        <h3>10th, Maharashtra, English</h3>
-                        <p class="text-gray-800">Maharashtra Board</p>
-                        <p class="date-range">2016 | 75-79.9%</p>
-                    </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Cloud & Infrastructure</h3>
+                    <ul class="list-disc list-inside text-gray-700 pl-4 mt-1">
+                        <li>AWS (EC2, S3, IAM, RDS), Terraform, Ansible, Tomcat</li>
+                    </ul>
                 </div>
-            </section>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Containers & Orchestration</h3>
+                    <ul class="list-disc list-inside text-gray-700 pl-4 mt-1">
+                        <li>Docker, Kubernetes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Monitoring & Security</h3>
+                    <ul class="list-disc list-inside text-gray-700 pl-4 mt-1">
+                        <li>Prometheus, Grafana, DevSecOps, Networking</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Scripting & Automation</h3>
+                    <ul class="list-disc list-inside text-gray-700 pl-4 mt-1">
+                        <li>Bash, Python</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Other Skills</h3>
+                    <ul class="list-disc list-inside text-gray-700 pl-4 mt-1">
+                        <li>Selenium Testing, Production Deployment, Cloud Infrastructure</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-            <!-- Awards & Certifications -->
-            <section class="section-content">
-                <h2>AWARDS & CERTIFICATIONS</h2>
-                <ul class="bullet-list text-gray-700">
-                    <li>Python for Everybody (Coursera)</li>
-                    <li>DevOps Essentials (Udemy)</li>
+        <!-- Professional Experience Section -->
+        <section class="resume-section">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Professional Experience</h2>
+
+            <!-- Job Entry 1 -->
+            <div class="mb-6">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-lg font-semibold text-gray-900">Software Engineer</h3>
+                    <span class="text-sm text-gray-500">Jul 2025 – Present</span>
+                </div>
+                <div class="flex justify-between items-center text-sm text-gray-600 mb-2">
+                    <span>i2V Systems</span>
+                    <span>Gurugram, Haryana, India</span>
+                </div>
+                <ul class="list-disc list-inside text-gray-700 text-sm pl-4">
+                    <li class="mb-1">Supporting QA and DevOps teams in infrastructure automation and deployment.</li>
+                    <li class="mb-1">Designing and executing test workflows for infrastructure-to-vehicle (I2V) systems.</li>
+                    <li>Streamlining build and release processes using Jenkins pipelines and Terraform.</li>
                 </ul>
-            </section>
-        </div>
+            </div>
+
+            <!-- Job Entry 2 -->
+            <div class="mb-6">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-lg font-semibold text-gray-900">DevOps Engineer (Freelance Project)</h3>
+                    <span class="text-sm text-gray-500">Apr 2024 – Jun 2024</span>
+                </div>
+                <div class="flex justify-between items-center text-sm text-gray-600 mb-2">
+                    <span>Upwork</span>
+                    <span>Remote</span>
+                </div>
+                <ul class="list-disc list-inside text-gray-700 text-sm pl-4">
+                    <li class="mb-1">Enhanced existing Terraform scripts for AWS infrastructure.</li>
+                    <li class="mb-1">Automated export and configuration for multi-environment setups.</li>
+                    <li>Delivered client-ready, reusable infrastructure as code (IaC) modules.</li>
+                </ul>
+            </div>
+
+            <!-- Job Entry 3 -->
+            <div class="mb-6">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-lg font-semibold text-gray-900">AWS DevOps Trainee</h3>
+                    <span class="text-sm text-gray-500">Jul 2023 – Dec 2023</span>
+                </div>
+                <div class="flex justify-between items-center text-sm text-gray-600 mb-2">
+                    <span>Naresh i Technologies</span>
+                    <span>Hyderabad, India</span>
+                </div>
+                <ul class="list-disc list-inside text-gray-700 text-sm pl-4">
+                    <li class="mb-1">Trained on AWS, Terraform, Docker, Kubernetes, and Jenkins.</li>
+                    <li class="mb-1">Built sample CI/CD pipelines to automate deployments on Tomcat servers.</li>
+                    <li>Assisted in containerizing applications and setting up monitoring dashboards.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="resume-section">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Education</h2>
+
+            <!-- Education Entry 1 -->
+            <div class="flex justify-between items-start mb-2">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900">Government College of Engineering, Jalgaon</h3>
+                    <p class="text-gray-600 text-sm">Bachelor of Technology (B.Tech), Computer Science & Engineering</p>
+                </div>
+                <span class="text-sm text-gray-500">2018 – 2022</span>
+            </div>
+
+            <!-- Education Entry 2 -->
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900">Shri R. R. Lahoti Science College, Morshi</h3>
+                    <p class="text-gray-600 text-sm">HSC</p>
+                </div>
+                <span class="text-sm text-gray-500">2016 – 2018</span>
+            </div>
+        </section>
+
+        <!-- Languages Section -->
+        <section class="resume-section">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Languages</h2>
+            <ul class="list-disc list-inside text-gray-700 text-sm pl-4">
+                <li>Hindi</li>
+                <li>English: Professional Working</li>
+            </ul>
+        </section>
+
     </div>
+
 </body>
 </html>
