@@ -19,7 +19,6 @@
     .price-discount{font-size:40px;font-weight:800;color:var(--accent)}
     .buy{display:inline-block;background:var(--accent);color:white;padding:14px 22px;border-radius:8px;text-decoration:none;font-weight:700;font-size:18px;cursor:pointer;margin-top:20px}
     footer{background:#0b1220;color:#cbd5e1;padding:24px 0;text-align:center;margin-top:40px}
-    .muted{color:#6b7280}
   </style>
 </head>
 <body>
@@ -40,27 +39,27 @@
           <span class="price-discount">₹900</span>
         </div>
 
-        <p class="muted">✔ Recorded HD video lessons<br>✔ Hands-on project demos<br>✔ Interview-focused training<br>✔ Lifetime access to material</p>
+        <p style="font-size:16px;color:#374151">✔ Recorded HD video lessons<br>✔ Hands-on project demos<br>✔ Interview-focused training<br>✔ Lifetime access to material</p>
 
-        <button class="buy" onclick="startUpiPayment()">Get Instant Access</button>
+        <a class="buy" id="payLink" href="upi://pay?pa=your-upi-id@upi&pn=Aasim%20Raza&am=900&cu=INR">Get Instant Access</a>
       </div>
     </section>
 
     <section id="content" style="max-width:800px;margin:auto;padding:40px 20px">
       <div id="lockedState" class="card">
         <h3>Course Content (Locked)</h3>
-        <p>This content will unlock after you complete payment.</p>
-        <p class="muted">Click "Get Instant Access" and your phone should open a UPI app with the payment prefilled. After payment, click "I have paid" to unlock.</p>
-        <button class="buy" onclick="startUpiPayment()">Pay Now</button>
+        <p>This content will unlock after your payment is confirmed manually.</p>
+        <a class="buy" id="payNow" href="upi://pay?pa=your-upi-id@upi&pn=Aasim%20Raza&am=900&cu=INR">Pay Now</a>
+        <p style="margin-top:12px;color:#6b7280;font-size:14px">⚠ After paying, please send your transaction ID/screenshot to the instructor via email/WhatsApp. Once verified, your course access will be activated.</p>
       </div>
 
       <div id="unlockedState" class="card" style="display:none">
         <h3>Welcome! 🎉 You have unlocked the course</h3>
         <ul style="text-align:left">
-          <li>📂 <a href="#">Download Lab Playbooks (zip)</a></li>
-          <li>🎥 <a href="#">Video: Linux Essentials</a></li>
-          <li>🎥 <a href="#">Video: Docker & CI/CD</a></li>
-          <li>🎥 <a href="#">Video: AWS Core Services</a></li>
+          <li><a href="#">📂 Download Lab Playbooks (zip)</a></li>
+          <li><a href="#">🎥 Video: Linux Essentials</a></li>
+          <li><a href="#">🎥 Video: Docker & CI/CD</a></li>
+          <li><a href="#">🎥 Video: AWS Core Services</a></li>
         </ul>
       </div>
     </section>
@@ -71,63 +70,108 @@
   </footer>
 
   <script>
-    /*
-      Best-effort UPI deep-link implementation.
-      This will attempt to open a UPI app on the user's phone with amount prefilled.
-      For maximum reliability replace `payeeVPA` below with a verified UPI ID (VPA) such as "yourid@bank".
-    */
+(function(){
+  // Fixed flow: clicking "Pay" no longer auto-unlocks content.
+  // Users must complete payment in their UPI app and then submit a transaction ID (or screenshot) to unlock.
 
-    const payeeVPA = '9766613006@upi'; // constructed from phone number; replace with real VPA if available
-    const payeeName = 'Aasim Raza';
-    const amount = '900';
-
-    function startUpiPayment(){
-      const upiUri = `upi://pay?pa=${encodeURIComponent(payeeVPA)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent('DevOps Course')}`;
-
-      // try opening the UPI URI (works on many mobile browsers)
+  function openUpiLink(href){
+    try{
       const a = document.createElement('a');
-      a.href = upiUri;
+      a.href = href;
       a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+    }catch(e){
+      // best-effort; nothing to do here
+    }
+  }
 
-      // fallback modal with instructions and "I have paid" button
-      const modal = document.createElement('div');
-      modal.className = 'modal-backdrop';
-      modal.style.position = 'fixed';
-      modal.style.inset = '0';
-      modal.style.background = 'rgba(2,6,23,0.6)';
-      modal.style.display = 'flex';
-      modal.style.alignItems = 'center';
-      modal.style.justifyContent = 'center';
-      modal.innerHTML = `
-        <div style="background:white;border-radius:10px;padding:20px;max-width:500px;width:100%">
-          <h3>Complete Your Payment</h3>
-          <p>If a UPI app opened, follow its prompts to pay ₹${amount}.</p>
-          <p>If nothing happened, open your UPI app and send ₹${amount} to the instructor's UPI ID. After payment, click "I have paid" to unlock.</p>
-          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px">
-            <button onclick="document.body.removeChild(document.currentModal)" style="padding:10px 16px;border-radius:8px;border:0;background:#e5e7eb;cursor:pointer">Close</button>
-            <button onclick="grantAccess(); document.body.removeChild(document.currentModal)" class="buy">I have paid</button>
+  function showPaymentModal(){
+    const modal = document.createElement('div');
+    modal.className = 'modal-backdrop';
+    modal.innerHTML = `
+      <div class="modal" style="max-width:540px;padding:20px">
+        <h3>Complete Payment & Submit Transaction ID</h3>
+        <p style="color:#374151">If a UPI app opened, follow its prompts to pay ₹900. After payment, enter your email and the UPI transaction ID below (or upload a screenshot).</p>
+        <form id="verifyPayForm">
+          <label style="display:block;margin:8px 0 4px;font-weight:700">Email</label>
+          <input type="email" id="verifyEmail" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6eef8" />
+          <label style="display:block;margin:8px 0 4px;font-weight:700">UPI Transaction ID</label>
+          <input type="text" id="verifyTxn" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6eef8" />
+          <label style="display:block;margin:8px 0 4px;font-weight:700">Screenshot (optional)</label>
+          <input type="file" id="verifyFile" accept="image/*" style="margin-bottom:8px" />
+          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+            <button type="button" id="cancelVerify" style="padding:8px 12px;border-radius:8px;background:#eef4fb;border:0;cursor:pointer">Cancel</button>
+            <button type="submit" class="buy">Submit & Unlock</button>
           </div>
-        </div>`;
-      document.body.appendChild(modal);
-      document.currentModal = modal;
-    }
+        </form>
+      </div>`;
 
-    function grantAccess(){
-      localStorage.setItem('paid_access','true');
+    document.body.appendChild(modal);
+
+    modal.querySelector('#cancelVerify').onclick = function(){ modal.remove(); };
+
+    modal.querySelector('#verifyPayForm').onsubmit = function(e){
+      e.preventDefault();
+      const email = document.getElementById('verifyEmail').value.trim();
+      const txn = document.getElementById('verifyTxn').value.trim();
+      const fileInput = document.getElementById('verifyFile');
+      if(!email || !txn){ alert('Please provide email and transaction id'); return; }
+
+      // store a record locally — in production POST this to your server for manual verification
+      const payments = JSON.parse(localStorage.getItem('manual_payments') || '[]');
+      payments.push({email, txn, filename: fileInput.files[0] ? fileInput.files[0].name : null, time: new Date().toISOString()});
+      localStorage.setItem('manual_payments', JSON.stringify(payments));
+
+      // For demo only: mark this email as paid and unlock content in this browser.
+      const paid = JSON.parse(localStorage.getItem('paid_access') || '{}');
+      paid[email] = {txn, time: new Date().toISOString()};
+      localStorage.setItem('paid_access', JSON.stringify(paid));
+
+      alert('Payment submitted. For this demo access is granted immediately in this browser. In production you should verify the transaction before granting access.');
+      modal.remove();
       unlockContent();
-    }
+    };
+  }
 
-    function unlockContent(){
-      document.getElementById('lockedState').style.display='none';
-      document.getElementById('unlockedState').style.display='block';
-    }
+  function unlockContent(){
+    const locked = document.getElementById('lockedState');
+    const unlocked = document.getElementById('unlockedState');
+    if(locked) locked.style.display = 'none';
+    if(unlocked) unlocked.style.display = 'block';
+  }
 
-    window.addEventListener('load',()=>{
-      if(localStorage.getItem('paid_access')==='true') unlockContent();
+  function checkPaidOnLoad(){
+    const paidRaw = localStorage.getItem('paid_access');
+    if(!paidRaw) return;
+    try{
+      const paid = JSON.parse(paidRaw);
+      if(typeof paid === 'object' && Object.keys(paid).length>0){ unlockContent(); return; }
+    }catch(err){
+      if(paidRaw === 'true'){ unlockContent(); return; }
+    }
+  }
+
+  // Attach handlers to buy links: open UPI and show submission modal; do NOT auto-unlock
+  const links = document.querySelectorAll('a.buy');
+  links.forEach(link => {
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      const href = this.getAttribute('href') || '';
+      if(href.startsWith('upi:') || href.startsWith('upi://')){
+        openUpiLink(href);
+      } else {
+        // if link has no upi scheme, still try to open it
+        if(href) openUpiLink(href);
+      }
+      // always show the verification modal to collect txn id — user must submit to unlock
+      showPaymentModal();
     });
-  </script>
+  });
+
+  window.addEventListener('load', checkPaidOnLoad);
+})();
+</script>
 </body>
 </html>
