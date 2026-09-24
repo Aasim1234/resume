@@ -5,28 +5,18 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hyderabad Trainer — DevOps & AWS Course Offer</title>
   <meta name="description" content="Hyderabad’s best trainer DevOps + AWS course — valued at ₹8,000, but now available for just ₹900. Recorded video sessions included." />
-  <style>
-    :root{--accent:#0b78d1;--dark:#0b1220;--muted:#6b7280}
-    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0;color:#0f1724;line-height:1.5;background:#f9fafb}
-    header{background:linear-gradient(90deg,#06202f 0%, #08314a 100%);color:white;padding:40px 20px;text-align:center}
-    .logo{font-size:22px;font-weight:700;margin-bottom:12px}
-    h1{font-size:32px;margin:0 0 12px}
-    .highlight{color:#22c55e;font-weight:700}
-    section{padding:60px 20px;max-width:900px;margin:auto}
-    .card{background:white;border-radius:12px;padding:28px;box-shadow:0 8px 24px rgba(11,22,40,0.08);text-align:center}
-    .price-box{margin:20px 0}
-    .price-original{text-decoration:line-through;color:#ef4444;font-size:20px;margin-right:8px}
-    .price-discount{font-size:40px;font-weight:800;color:var(--accent)}
-    .buy{display:inline-block;background:var(--accent);color:white;padding:14px 22px;border-radius:8px;text-decoration:none;font-weight:700;font-size:18px;cursor:pointer;margin-top:20px}
-    footer{background:#0b1220;color:#cbd5e1;padding:24px 0;text-align:center;margin-top:40px}
-    .muted{color:#6b7280}
-  </style>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="/js/app.js" defer></script>
 </head>
 <body>
+  <div id="demoBanner" class="demo-banner" hidden>
+    DEMO MODE — payment submissions are approved automatically without any verification. Do not use with real buyers.
+  </div>
+
   <header>
     <div class="logo">Hyderabad DevOps & AWS Expert</div>
     <h1><span class="highlight">Hyderabad’s Best Trainer</span> brings you DevOps & AWS Course</h1>
-    <p style="color:#cfe7ff;font-size:18px">Valued at ₹8,000 — Today available for only <strong>₹900</strong>!<br>100% Recorded Video Course, Learn Anytime.</p>
+    <p class="header-sub">Valued at ₹8,000 — Today available for only <strong>₹<span class="js-price">900</span></strong>!<br>100% Recorded Video Course, Learn Anytime.</p>
   </header>
 
   <main>
@@ -37,33 +27,31 @@
 
         <div class="price-box">
           <span class="price-original">₹8,000</span>
-          <span class="price-discount">₹900</span>
+          <span class="price-discount">₹<span class="js-price">900</span></span>
         </div>
 
         <p class="muted">✔ Recorded HD video lessons<br>✔ Hands-on project demos<br>✔ Interview-focused training<br>✔ Lifetime access to material</p>
 
-        <button class="buy" onclick="startUpiPayment()">Get Instant Access</button>
+        <button type="button" class="buy js-pay">Get Instant Access</button>
       </div>
     </section>
 
-    <section id="content" style="max-width:800px;margin:auto;padding:40px 20px">
+    <section id="content" class="content-section">
       <div id="lockedState" class="card">
         <h3>Course Content (Locked)</h3>
-        <p>This content will unlock after you complete payment.</p>
+        <p>This content will unlock after your payment is verified.</p>
         <p class="muted">Click "Get Instant Access" and your phone should open a UPI app with the payment prefilled. After payment, submit your transaction ID to unlock.</p>
-        <button class="buy" onclick="startUpiPayment()">Pay Now</button>
+        <p id="accessStatus" class="status" hidden></p>
+        <button type="button" class="buy js-pay">Pay Now</button>
+        <button type="button" id="checkStatusBtn" class="link-btn" hidden>Check verification status</button>
       </div>
 
-      <div id="unlockedState" class="card" style="display:none">
+      <div id="unlockedState" class="card" hidden>
         <h3>Welcome! 🎉 You have unlocked the course</h3>
-        <div style="text-align:left">
+        <div class="text-left">
           <h4>📘 Course Materials</h4>
-          <ul>
-            <li>📂 <a href="#">Download Lab Playbooks (zip)</a></li>
-            <li>🎥 <a href="#">Video: Linux Essentials</a></li>
-            <li>🎥 <a href="#">Video: Docker & CI/CD</a></li>
-            <li>🎥 <a href="#">Video: AWS Core Services</a></li>
-          </ul>
+          <ul id="courseFiles"></ul>
+          <p id="noFiles" class="muted" hidden>Course files haven’t been uploaded yet — please check back soon.</p>
           <h4>📝 Extra Content</h4>
           <p>All bonus notes, PDFs, and additional guides provided by the trainer will appear here after payment verification.</p>
         </div>
@@ -75,67 +63,36 @@
     <div>© Hyderabad DevOps & AWS Course — Trusted Expert Trainer</div>
   </footer>
 
-  <script>
-    const payeeVPA = 'your-upi-id@bank'; // replace with actual UPI ID
-    const payeeName = 'Hyderabad Trainer';
-    const amount = '900';
+  <div id="paymentModal" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle">
+      <button type="button" class="modal-close" id="closeModalBtn" aria-label="Close">×</button>
+      <h3 id="paymentModalTitle">Complete Your Payment</h3>
 
-    function startUpiPayment(){
-      const upiUri = `upi://pay?pa=${encodeURIComponent(payeeVPA)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent('DevOps Course')}`;
+      <div id="paymentsDisabled" class="notice" hidden>
+        Payments are not set up on this server yet. Please contact the trainer.
+      </div>
 
-      const a = document.createElement('a');
-      a.href = upiUri;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      <div id="paymentInstructions">
+        <p>If a UPI app opened, follow its prompts to pay ₹<span class="js-price">900</span>.</p>
+        <p>If nothing happened, open your UPI app and send ₹<span class="js-price">900</span> to
+          <strong id="payeeVpa"></strong> (<span id="payeeName"></span>).
+          After payment, fill in the form below and click "I have paid".</p>
+      </div>
 
-      showPaymentModal();
-    }
+      <form id="verifyPayForm" novalidate>
+        <label for="verifyEmail">Email</label>
+        <input type="email" id="verifyEmail" name="email" required autocomplete="email" maxlength="254" />
 
-    function showPaymentModal(){
-      const modal = document.createElement('div');
-      modal.className = 'modal-backdrop';
-      modal.style.position = 'fixed';
-      modal.style.inset = '0';
-      modal.style.background = 'rgba(2,6,23,0.6)';
-      modal.style.display = 'flex';
-      modal.style.alignItems = 'center';
-      modal.style.justifyContent = 'center';
-      modal.innerHTML = `
-        <div style="background:white;border-radius:10px;padding:20px;max-width:500px;width:100%">
-          <h3>Complete Your Payment</h3>
-          <p>If a UPI app opened, follow its prompts to pay ₹${amount}.</p>
-          <p>If nothing happened, open your UPI app and send ₹${amount} to the trainer’s UPI ID. After payment, click "I have paid" to unlock.</p>
-          <form id="verifyPayForm">
-            <label style="display:block;margin:8px 0 4px;font-weight:700">Email</label>
-            <input type="email" id="verifyEmail" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6eef8" />
-            <label style="display:block;margin:8px 0 4px;font-weight:700">UPI Transaction ID</label>
-            <input type="text" id="verifyTxn" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6eef8" />
-            <button type="submit" class="buy" style="margin-top:12px">I have paid</button>
-          </form>
-        </div>`;
-      document.body.appendChild(modal);
+        <label for="verifyTxn">UPI Transaction ID</label>
+        <input type="text" id="verifyTxn" name="txn" required maxlength="40" pattern="[A-Za-z0-9\-]{6,40}" autocomplete="off" />
 
-      modal.querySelector('#verifyPayForm').onsubmit = function(e){
-        e.preventDefault();
-        const email = document.getElementById('verifyEmail').value.trim();
-        const txn = document.getElementById('verifyTxn').value.trim();
-        if(!email || !txn){ alert('Please provide both fields'); return; }
-        localStorage.setItem('paid_access','true');
-        modal.remove();
-        unlockContent();
-      };
-    }
+        <label for="verifyScreenshot">Payment screenshot <span class="muted">(optional, PNG/JPG/WEBP)</span></label>
+        <input type="file" id="verifyScreenshot" name="screenshot" accept="image/png,image/jpeg,image/webp" />
 
-    function unlockContent(){
-      document.getElementById('lockedState').style.display='none';
-      document.getElementById('unlockedState').style.display='block';
-    }
-
-    window.addEventListener('load',()=>{
-      if(localStorage.getItem('paid_access')==='true') unlockContent();
-    });
-  </script>
+        <p id="formError" class="error" role="alert" hidden></p>
+        <button type="submit" class="buy" id="submitPaymentBtn">I have paid</button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# secrets / local config (commit .env.example instead)
+.env
+.env.*
+!.env.example
+
+# runtime data: buyer emails, payment screenshots, paid course files
+db.json
+db.json.tmp
+uploads/
+screenshots/
+tmp/
+data/
+
+# logs & OS/editor clutter
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

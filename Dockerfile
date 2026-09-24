@@ -1,35 +1,31 @@
-# Use a small Node image
-FROM node:18-alpine
+# Node 24 LTS (matches local development)
+FROM node:24-alpine
 
-# Create app directory
 WORKDIR /usr/src/app
+ENV NODE_ENV=production
 
-# Ensure logs and uploads persist in container filesystem
-RUN mkdir -p /usr/src/app/uploads /usr/src/app/screenshots /usr/src/app/public
+# Install dependencies first for better layer caching
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
 
-# If you have a package.json locally, copy it first for better caching
-COPY package*.json ./
-
-# If package.json doesn't exist, create one and install required deps
-# (express + multer). We use a fallback: if package.json was not copied,
-# the next RUN will still install the dependencies.
-RUN if [ -f package.json ]; then npm ci --only=production || npm install --only=production; \
-    else npm init -y && npm install express multer; fi
-
-# Copy server and all source files (server.js, public folder, etc.)
-COPY server.js ./
+# App source: server, page, static assets
+COPY server.js index.html ./
 COPY public ./public
 
-# Create directories used by server (uploads/screenshots)
-RUN mkdir -p uploads screenshots
+# Persistent data (db.json, uploads/, screenshots/) lives in /usr/src/app/data.
+# Mount a volume there so it survives container restarts.
+ENV DATA_DIR=/usr/src/app/data
+RUN mkdir -p "$DATA_DIR" && chown -R node:node "$DATA_DIR"
+VOLUME ["/usr/src/app/data"]
 
-# Expose port 80 (the server reads PORT env var)
-ENV PORT=80
-EXPOSE 80
+# Don't run as root
+USER node
 
-# Healthcheck (optional)
+# Unprivileged port (non-root user). Map it on the host: docker run -p 80:3000 ...
+ENV PORT=3000
+EXPOSE 3000
+
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
-  CMD wget -q -O - http://localhost:$PORT/ || exit 1
+  CMD wget -q -O - "http://localhost:${PORT}/api/health" || exit 1
 
-# Start the server
-CMD [ "node", "server.js" ]
+CMD ["node", "server.js"]
